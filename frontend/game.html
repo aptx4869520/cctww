@@ -1,11 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>首頁</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111318">
+  <title>地點挑戰 · CCTWW</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&amp;family=Oxanium:wght@400;500;600;700;800&amp;display=swap">
+  <link rel="stylesheet" href="/frontend/css/game.css">
 </head>
 <body>
-    遊戲頁面，會有問題UI(一次答題都匯回傳紀錄，問題也會接著發回去) 、生命值、計時器(10S)。結算dialog
+  <main class="game" aria-labelledby="title">
+    <header class="site-header">
+      <a class="brand" id="brand-home" href="/" aria-label="CCTWW，返回首頁">
+        <span class="brand-mark" aria-hidden="true"><img src="/frontend/image/retina-logo.svg" alt=""></span>
+        <span class="brand-name">CCTWW <small>台灣公路觀察室</small></span>
+      </a>
+      <section class="status" aria-label="遊戲狀態"><span>剩餘生命</span><strong id="life" aria-live="polite">—</strong></section>
+    </header>
+
+    <div class="play-area">
+      <section class="camera-panel" aria-label="本題監視器畫面">
+        <div class="camera-heading"><span class="live-dot" aria-hidden="true"></span><span>公路即時視角</span><span class="camera-number">CCTV</span></div>
+        <div id="evidence-grid" class="evidence-grid">
+          <div class="evidence-block evidence-camera">
+            <div class="camera">
+              <img id="cctv" alt="本題公路監視器畫面" hidden>
+              <iframe id="cctv-frame" title="本題公路監視器畫面" sandbox="allow-scripts" hidden></iframe>
+              <p id="camera-status" role="status">等待題目載入</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="answer-panel" aria-labelledby="title">
+        <div class="question">
+          <div class="question-topline">
+            <p class="eyebrow">選出正確的地點</p>
+            <div class="timer" aria-label="作答倒數">
+              <div class="timer-label"><label for="countdown">作答</label><strong><span id="remaining">10</span><small>秒</small></strong></div>
+              <div class="timer-track">
+                <progress id="countdown" max="10" value="10">10 秒</progress>
+                <span id="timer-marker" class="timer-marker" aria-hidden="true"></span>
+              </div>
+            </div>
+          </div>
+          <h1 id="title">你覺得這是哪裡？</h1>
+          <p id="hint">正在準備題目…</p>
+        </div>
+        <div id="options" class="options" role="group" aria-label="四個答案選項"></div>
+        <section id="feedback" class="feedback" role="status" aria-live="polite">正在確認遊戲…</section>
+        <button id="next" class="next" type="button" hidden><span class="glass-label">下一題</span></button>
+      </section>
+    </div>
+
+    <dialog id="game-result" class="result-dialog" aria-labelledby="result-title" aria-describedby="result-description">
+      <div class="result-icon" aria-hidden="true">
+        <img src="/frontend/image/retina-logo.svg" alt="">
+      </div>
+      <p class="eyebrow">本次挑戰結束</p>
+      <h2 id="result-title">公路探險完成！</h2>
+      <p id="result-description">本次答對 <strong id="result-count">0</strong> 題</p>
+      <div class="result-actions">
+        <button id="result-restart" type="button"><span class="glass-label">重新開始</span></button>
+      </div>
+    </dialog>
+    <dialog id="leave-confirm" class="confirm-dialog" aria-labelledby="leave-confirm-title" aria-describedby="leave-confirm-description">
+      <p class="eyebrow">離開挑戰</p>
+      <h2 id="leave-confirm-title">確定要返回首頁嗎？</h2>
+      <p id="leave-confirm-description">目前遊戲進度將會結束。</p>
+      <div class="confirm-actions">
+        <button id="leave-cancel" type="button">繼續作答</button>
+        <button id="leave-submit" type="button">離開遊戲</button>
+      </div>
+    </dialog>
+    <noscript>遊戲需要 JavaScript，請啟用後重新開啟。</noscript>
+  </main>
+  <script src="/frontend/js/game.js"></script>
 </body>
 </html>

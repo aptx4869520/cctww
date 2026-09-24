@@ -1,11 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>遊戲</title>
-</head>
-<body>
-    首頁，會有介紹，排行榜。隨機CCTV畫面。進入遊戲BTN
-</body>
+<html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#111318" />
+        <title>CCTWW 台灣公路觀察室</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&amp;family=Oxanium:wght@400;500;600;700;800&amp;display=swap" />
+        <link rel="stylesheet" href="/frontend/css/index.css">
+    </head>
+    <body>
+        <svg class="icon-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <radialGradient id="retina-iris">
+                    <stop offset="0" stop-color="#07132f" />
+                    <stop offset="0.45" stop-color="#1d5cb0" />
+                    <stop offset="0.78" stop-color="#4895e2" />
+                    <stop offset="1" stop-color="#071c46" />
+                </radialGradient>
+            </defs>
+            <symbol id="retina-symbol" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="47" fill="none" stroke="#d7eeff" stroke-width="1.5" />
+                <circle cx="50" cy="50" r="39" fill="url(#retina-iris)" stroke="#5da8ff" stroke-width=".7" />
+                <circle cx="50" cy="50" r="23" fill="none" stroke="#d7efff" stroke-width=".7" opacity=".7" />
+                <circle cx="50" cy="50" r="17" fill="#081936" stroke="#b8e7ff" stroke-width="1.7" />
+                <circle cx="50" cy="50" r="13" fill="#020b20" />
+            </symbol>
+        </svg>
+
+        <main class="home">
+            <header class="site-header">
+                <a class="brand" href="/" aria-label="CCTWW，首頁">
+                    <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 100 100" focusable="false"><use href="#retina-symbol"></use></svg></span>
+                    <span class="brand-name">CCTWW <small>台灣公路觀察室</small></span>
+                </a>
+                <span class="tag"><span class="tag-dot" aria-hidden="true"></span> 首頁</span>
+            </header>
+
+            <section class="hero">
+                <p class="eyebrow">CCTV 地點挑戰</p>
+                <h1>猜猜這是台灣哪裡</h1>
+                <p class="lede">透過交通部公開的即時 CCTV，四選一猜出鏡頭所在的國道與快速道路。觀察路牌、地形與車流，越快越準，分數越高。</p>
+                <ul class="how">
+                    <li><span class="how-key">1</span> 每題 10 秒，時間到就算沒作答</li>
+                    <li><span class="how-key">2</span> 答錯扣一顆生命，生命歸零就結束</li>
+                    <li><span class="how-key">3</span> 想登上排行榜，就完成挑戰</li>
+                </ul>
+            </section>
+
+            <section class="preview-card" aria-label="隨機公路預覽">
+                <div class="preview-heading"><span class="live-dot" aria-hidden="true"></span><span>公路即時視角</span><span class="preview-tag">LIVE</span></div>
+                <div class="preview">
+                    <img id="rancctv" alt="隨機公路監視器畫面" hidden />
+                    <p id="rancctv-status" role="status">載入即時影像…</p>
+                </div>
+            </section>
+
+            <section class="signin-card" aria-labelledby="signinTitle">
+                <h2 id="signinTitle" class="card-title">開始前，先取個名字</h2>
+                <p class="card-desc">留個暱稱就能登上排行榜，不填也能直接開玩。</p>
+
+                <form id="signinForm" class="form" novalidate>
+                    <label class="field" for="nickname">
+                        <span class="field-label"><span class="field-icon" aria-hidden="true">◎</span> 暱稱</span>
+                        <input type="text" id="nickname" name="nickname" placeholder="為自己取個名字" autocomplete="off" maxlength="20" />
+                    </label>
+
+                    <label class="field" for="email">
+                        <span class="field-label"><span class="field-icon" aria-hidden="true">✉</span> Email（選填）</span>
+                        <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="off" />
+                        <span class="field-hint warn" id="emailHint" hidden></span>
+                    </label>
+
+                    <div class="status" id="statusBox" data-state="idle" hidden>
+                        <span class="status-dot" aria-hidden="true"></span>
+                        <span class="status-text" id="statusText"></span>
+                    </div>
+
+                    <button type="submit" class="primary-btn" id="startBtn">
+                        <span class="btn-label glass-label">開始挑戰</span>
+                        <span class="spinner" aria-hidden="true"></span>
+                    </button>
+                </form>
+
+                <a class="secondary-link" href="/result">查看排行榜 →</a>
+            </section>
+
+            <footer class="site-footer">
+                <span>沿著公路，認識台灣。</span>
+                <span class="foot-mark">CCTWW</span>
+            </footer>
+        </main>
+        <script src="/frontend/js/index.js"></script>
+    </body>
 </html>

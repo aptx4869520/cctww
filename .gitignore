@@ -1,0 +1,43 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Environment variables / secrets
+.env
+.env.*
+!.env.example
+
+# Python virtual environments
+.venv/
+.venv-old/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Test and analysis cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Logs and runtime files
+*.log
+*.pid
+*.db
+*.sqlite3
+
+# IDE settings
+.vscode/
+.idea/
+*.swp
+*.swo

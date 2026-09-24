@@ -1,11 +1,114 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>結算</title>
-</head>
-<body>
-     顯示所有題目與正確答案(最後執行)。排行榜。結尾與感謝文字。
-</body>
+<html lang="zh-TW">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#111318" />
+        <title>CCTWW 結算與排行榜</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&amp;family=Oxanium:wght@400;500;600;700;800&amp;display=swap" />
+        <link rel="stylesheet" href="/frontend/css/result.css" />
+    </head>
+    <body>
+        <svg class="icon-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <radialGradient id="retina-iris">
+                    <stop offset="0" stop-color="#07132f" />
+                    <stop offset="0.45" stop-color="#1d5cb0" />
+                    <stop offset="0.78" stop-color="#4895e2" />
+                    <stop offset="1" stop-color="#071c46" />
+                </radialGradient>
+            </defs>
+            <symbol id="retina-symbol" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="47" fill="none" stroke="#d7eeff" stroke-width="1.5" />
+                <circle cx="50" cy="50" r="39" fill="url(#retina-iris)" stroke="#5da8ff" stroke-width=".7" />
+                <circle cx="50" cy="50" r="23" fill="none" stroke="#d7efff" stroke-width=".7" opacity=".7" />
+                <circle cx="50" cy="50" r="17" fill="#081936" stroke="#b8e7ff" stroke-width="1.7" />
+                <circle cx="50" cy="50" r="13" fill="#020b20" />
+            </symbol>
+        </svg>
+
+        <main class="result">
+            <header class="site-header">
+                <a class="brand" href="/" aria-label="CCTWW，首頁">
+                    <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 100 100" focusable="false"><use href="#retina-symbol"></use></svg></span>
+                    <span class="brand-name">CCTWW <small>台灣公路觀察室</small></span>
+                </a>
+                <span class="tag"><span class="tag-dot" aria-hidden="true"></span> 結算</span>
+            </header>
+
+            <section class="panel result-summary" id="resultSummary" aria-labelledby="resultTitle">
+                <div class="summary-head">
+                    <span class="result-icon" aria-hidden="true"><svg viewBox="0 0 100 100" focusable="false"><use href="#retina-symbol"></use></svg></span>
+                    <div>
+                        <p class="eyebrow">本次挑戰結束</p>
+                        <h1 id="resultTitle">遊戲結算</h1>
+                    </div>
+                </div>
+
+                <div class="result-status" id="resultStatus" data-status="finish">
+                    <span class="status-badge" id="statusBadge">—</span>
+                    <span class="status-note" id="statusNote"></span>
+                </div>
+
+                <div class="summary">
+                    <div class="summary-item">
+                        <span class="summary-label">答對題數</span>
+                        <span class="summary-value" id="pointValue">—</span>
+                    </div>
+                    <div class="summary-divider" aria-hidden="true"></div>
+                    <div class="summary-item">
+                        <span class="summary-label">總遊玩時間</span>
+                        <span class="summary-value" id="timeValue">—</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel errors" id="errorsPanel" aria-labelledby="errorsTitle">
+                <h2 id="errorsTitle" class="panel-title">
+                    答錯題目回顧
+                    <span class="errors-count" id="errorsCount">0</span>
+                </h2>
+
+                <div class="cctv-heading"><span class="live-dot" aria-hidden="true"></span><span>CCTV 畫面</span><span class="cctv-tag">CCTV</span></div>
+                <div class="cctv-viewer">
+                    <img id="cctvImg" alt="錯題地點的 CCTV 畫面" hidden />
+                    <p id="cctvStatus" role="status">點下方選項，看看正解的即時畫面</p>
+                </div>
+                <p class="cctv-caption">綠色是正確答案。點任一選項，就能看它的即時影像，比對你當時選的與正解。</p>
+
+                <div class="errors-list" id="errorsList"></div>
+                <p class="errors-empty" id="errorsEmpty" hidden>這局全部答對，沒有錯題 🎉</p>
+            </section>
+
+            <section class="panel ranking" aria-labelledby="rankingTitle">
+                <div class="ranking-head">
+                    <h2 id="rankingTitle" class="panel-title">排行榜</h2>
+                    <button class="icon-refresh" id="refreshBtn" aria-label="重新整理排行榜">⟳</button>
+                </div>
+                <p class="panel-sub">完成整場挑戰才會登上排行榜</p>
+
+                <div class="ranking-columns">
+                    <span class="col col-rank">排名</span>
+                    <span class="col col-name">玩家</span>
+                    <span class="col col-score" title="累計分數">分數</span>
+                    <span class="col col-time" title="總答題時間">時間</span>
+                </div>
+                <ol class="ranking-list" id="rankingList"></ol>
+                <p class="ranking-state" id="rankingState" hidden>載入中…</p>
+            </section>
+
+            <div class="result-actions">
+                <a class="ghost-full" href="/"><span class="glass-label">返回首頁</span></a>
+                <button class="primary-full" id="againBtn" type="button"><span class="glass-label">再玩一次</span></button>
+            </div>
+
+            <footer class="site-footer">
+                <span>沿著公路，認識台灣。</span>
+                <span class="foot-mark">CCTWW</span>
+            </footer>
+        </main>
+        <script src="/frontend/js/result.js"></script>
+    </body>
 </html>
